@@ -1,0 +1,142 @@
+<nav class="navbar"> 
+            <ul class="list">
+                <div class="logo">
+                <img src="https://img.freepik.com/premium-vector/sp-letter-logo-design-black-background-initial-monogram-letter-sp-logo-design-vector-template_634196-1205.jpg?w=2000" alt="logo">
+                 </div>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/feedback">Feedback</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+       <p style="margin-right:20px ; margin-top:7px ;">
+        <a href="/signin" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </a>
+      </p> 
+</nav>
+<div class="box2">
+    <form id="bookingForm">
+    {{!-- <form id="bookingForm" method="POST" action="/booking"> --}}
+    <label for="name">Name:</label>
+    <input type="text" id="name" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required><br>
+
+    <label for="slot">Select a Slot:</label>
+    <select id="slot" required>
+      <option value="A">Slot A</option>
+      <option value="B">Slot B</option>
+      <option value="C">Slot C</option>
+    </select><br>
+
+    <input type="submit" value="Book Slot">
+  </form>
+  <div id="bookings">
+      <div class="slotsb"><p id="book1" ></p></div>
+      <div class="slotsb"><p id="book2" ></p></div>
+      <div class="slotsb"><p id="book3" ></p></div>
+   </div>
+  </div>
+
+
+
+{{!-- <script type="module" src="firebase.js"></script> --}}
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+
+{{!-- <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script> --}}
+{{!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+
+<script type="module" >
+
+
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+   const firebaseConfig = {
+    apiKey: "AIzaSyB5pn8-YpeZn14oCz7Ykubyujw6IS-uU9Q",
+    authDomain: "smart-parking-88ddf.firebaseapp.com",
+    databaseURL: "https://smart-parking-88ddf-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "smart-parking-88ddf",
+    storageBucket: "smart-parking-88ddf.appspot.com",
+    messagingSenderId: "721183918726",
+    appId: "1:721183918726:web:ac0b8f1c17dcb344839f07"
+  };
+  firebase.initializeApp(firebaseConfig) ;
+
+  var database = firebase.database() ;
+   
+
+ var bookingsRef = database.ref("bookings");
+
+    document.getElementById("bookingForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var slot = document.getElementById("slot").value;
+
+      if (name && email && slot) {
+        // Check if the slot is already booked
+        bookingsRef.once("value", function(snapshot) {
+          var bookings = snapshot.val();
+          var isSlotAvailable = true;
+          if (bookings) {
+            Object.values(bookings).forEach(function(booking) {
+                if(booking.slot === "A")
+               {document.getElementById("book1").innerHTML = "booked" ;}
+               if(booking.slot === "B")
+             {document.getElementById("book2").innerHTML = "booked" ;}
+              if(booking.slot === "C")
+             {document.getElementById("book3").innerHTML = "booked" ;}
+              if (booking.slot === slot) {
+                isSlotAvailable = false;
+              }
+                // setTimeout(function() {
+                  //  isSlotAvailable = true ;
+                    //console.log("slot free") ;
+                //},5000) ;
+            });
+          }
+          
+          if (isSlotAvailable) {
+            // Book the slot
+            var newBookingRef = bookingsRef.push();
+            newBookingRef.set({
+              name: name,
+              email: email,
+              slot: slot
+            }).then(function() {
+              alert("Slot booked successfully!");
+              document.getElementById("name").value = "";
+              document.getElementById("email").value = "";
+              document.getElementById("slot").value = "";
+               if(slot === "A")
+               {document.getElementById("book1").innerHTML = "booked" ;}
+               if(slot === "B")
+             {document.getElementById("book2").innerHTML = "booked" ;}
+              if(slot === "C")
+             {document.getElementById("book3").innerHTML = "booked" ;}
+            }).catch(function(error) {
+              console.error("Error saving booking:", error);
+            });
+          } 
+         else { alert("This slot is already booked. Please choose another slot.");
+          if(slot === "A")
+               {document.getElementById("book1").innerHTML = "booked" ;}
+               if(slot === "B")
+             {document.getElementById("book2").innerHTML = "booked" ;}
+              if(slot === "C")
+             {document.getElementById("book3").innerHTML = "booked" ;}
+           }
+                
+        });
+      } else {
+        alert("Please fill in all the fields.");
+      }
+    });
+
+</script>

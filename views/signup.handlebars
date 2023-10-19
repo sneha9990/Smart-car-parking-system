@@ -1,0 +1,115 @@
+
+
+    <section >
+  <div class="login py-1 h-60">
+    <div class="box d-flex align-items-center justify-content-center h-140">
+      <div class="col-md-5 col-lg-5 col-xl-3 offset-xl-1">
+        <form class="loginform" style="height:450px" >
+          
+          <div class="form-outline mb-1">
+            <input type="email" id="email" class="form-control form-control-lg" placeholder="Email address" />
+          </div>
+          <div class="form-outline mb-1">
+            <input type="password" id="password" class="form-control form-control-lg" placeholder="password" />
+          </div>
+          <div class="form-outline mb-1">
+            <input type="text" id="name" class="form-control form-control-lg" placeholder="Your name" />
+          </div>
+
+          <div class="d-flex justify-content-around align-items-center mb-2">
+            <!-- Checkbox -->
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
+              <label class="form-check-label" for="form1Example3"> Remember me </label>
+            {{!-- </div>
+            <a href="#!">Forgot password?</a>
+          </div> --}}
+          <div class="bottom">
+          <!-- Submit button -->
+          <button id="register" type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+          
+          <div class="divider  align-items-center ">
+            <p class="text-center fw-bold   mb-0 text-muted">OR</p>
+          </div>
+          <div>
+          <p>Already have an account !</p>
+          <a class="btn btn-primary btn-lg btn-block " style="background-color: #3b5998" href="/signin"
+            role="button">Click to login</a>
+            </div>
+            </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="module" src="firebase.js"></script>
+
+    {{!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+	 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script> --}}
+
+{{!-- <script type="module">
+  // Import the functions you need from the SDKs you need
+ // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+  
+  
+ 
+	  // Import the functions you need from the SDKs you need
+	  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+	  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+	  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB5pn8-YpeZn14oCz7Ykubyujw6IS-uU9Q",
+    authDomain: "smart-parking-88ddf.firebaseapp.com",
+    databaseURL: "https://smart-parking-88ddf-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "smart-parking-88ddf",
+    storageBucket: "smart-parking-88ddf.appspot.com",
+    messagingSenderId: "721183918726",
+    appId: "1:721183918726:web:ac0b8f1c17dcb344839f07"
+  };
+
+  // Initialize Firebase
+  //firebase.initializeApp(firebaseConfig) ;
+
+  //const database = firebase.database() ;
+ // const auth = firebase.auth() ;
+
+
+	  const app = initializeApp(firebaseConfig);
+	  const analytics = getAnalytics(app);
+	  const auth = getAuth();
+	  console.log(app);
+
+
+    document.getElementById("register").addEventListener("click", function() {
+        event.preventDefault() 
+		  var email =  document.getElementById("email").value;
+		  var name = document.getElementById("name").value;
+		  var password = document.getElementById("password").value;
+		  //For new registration
+		  createUserWithEmailAndPassword(auth,email, password , name)
+		  .then((userCredential) => {
+		    // Signed in 
+		    const user = userCredential.user;
+		    console.log(user);
+		    alert("Registration successfull!!");
+            window.location.assign('/home') ;
+		    // ...
+		  })
+		  .catch((error) => {
+		    const errorCode = error.code;
+		    const errorMessage = error.message;
+		    // ..
+		    console.log(errorMessage);
+		    alert(error);
+		  });		  		  
+	  });
+  
+
+
+    
+</script> --}}

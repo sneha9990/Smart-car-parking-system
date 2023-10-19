@@ -1,0 +1,67 @@
+document.getElementById("bookingForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var slot = document.getElementById("slot").value;
+
+      if (name && email && slot) {
+        // Check if the slot is already booked
+        bookingsRef.once("value", function(snapshot) {
+          var bookings = snapshot.val();
+          var isSlotAvailable = true;
+          if (bookings) {
+            Object.values(bookings).forEach(function(booking) {
+                if(booking.slot === "A")
+               {document.getElementById("book1").innerHTML = "booked" ;}
+               if(booking.slot === "B")
+             {document.getElementById("book2").innerHTML = "booked" ;}
+              if(booking.slot === "C")
+             {document.getElementById("book3").innerHTML = "booked" ;}
+              if (booking.slot === slot) {
+                isSlotAvailable = false;
+              }
+                // setTimeout(function() {
+                  //  isSlotAvailable = true ;
+                    //console.log("slot free") ;
+                //},5000) ;
+            });
+          }
+          
+          if (isSlotAvailable) {
+            // Book the slot
+            var newBookingRef = bookingsRef.push();
+            newBookingRef.set({
+              name: name,
+              email: email,
+              slot: slot
+            }).then(function() {
+              alert("Slot booked successfully!");
+              document.getElementById("name").value = "";
+              document.getElementById("email").value = "";
+              document.getElementById("slot").value = "";
+               if(slot === "A")
+               {document.getElementById("book1").innerHTML = "booked" ;}
+               if(slot === "B")
+             {document.getElementById("book2").innerHTML = "booked" ;}
+              if(slot === "C")
+             {document.getElementById("book3").innerHTML = "booked" ;}
+            }).catch(function(error) {
+              console.error("Error saving booking:", error);
+            });
+          } 
+      //   else { alert("This slot is already booked. Please choose another slot.");
+       //   if(slot === "A")
+       //        {document.getElementById("book1").innerHTML = "booked" ;}
+          //     if(slot === "B")
+        //     {document.getElementById("book2").innerHTML = "booked" ;}
+           //   if(slot === "C")
+           //  {document.getElementById("book3").innerHTML = "booked" ;}
+          // }
+                
+     //   });
+     // } else {
+     //   alert("Please fill in all the fields.");
+     // }
+    });
+      }
+    });

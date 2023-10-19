@@ -1,0 +1,96 @@
+<nav class="navbar"> 
+            <ul class="list">
+                <div class="logo">
+                <img src="https://img.freepik.com/premium-vector/sp-letter-logo-design-black-background-initial-monogram-letter-sp-logo-design-vector-template_634196-1205.jpg?w=2000" alt="logo">
+                 </div>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/feedback">Feedback</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+       <p style="margin-right:20px ; margin-top:7px ;">
+        <a href="/signin" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </a>
+      </p> 
+</nav>
+
+   <div id="content2">
+   <p class="heading2" style=" font-size:60px; text-align:center ; margin-left:100px ;">Slots details</p>
+   <div id="details">
+      <div class="slotss"><p id="sensorvalue"></p></div>
+      <div class="slotss"><p id="sensorvalue2"></p></div>
+      <div class="slotss"><p id="sensorvalue3"></p></div>
+   </div>
+   {{!-- <div id="bookings">
+      <div class="slotsb"><p id="book1" value=""></p></div>
+      <div class="slotsb"><p id="book2" value=""></p></div>
+      <div class="slotsb"><p id="book3" value=""></p></div>
+   </div> --}}
+
+{{!-- <script type="module" src="firebase.js"></script> --}}
+
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+
+
+<script type="module">
+
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+    
+  const firebaseConfig = {
+    apiKey: "AIzaSyB5pn8-YpeZn14oCz7Ykubyujw6IS-uU9Q",
+    authDomain: "smart-parking-88ddf.firebaseapp.com",
+    databaseURL: "https://smart-parking-88ddf-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "smart-parking-88ddf",
+    storageBucket: "smart-parking-88ddf.appspot.com",
+    messagingSenderId: "721183918726",
+    appId: "1:721183918726:web:ac0b8f1c17dcb344839f07"
+  };
+  firebase.initializeApp(firebaseConfig) ;
+
+
+
+  var database = firebase.database() ;
+  var dataRef1 = database.ref('slots/int') ;
+  var dataRef2 = database.ref('slots/int2') ;
+  var dataRef3 = database.ref('slots/int3') ;
+  
+  dataRef1.on('value', function(getdata1){
+	  	var status1 = getdata1.val();
+      if(status1==0)
+	  	{document.getElementById('sensorvalue').innerHTML = "full" ;}
+      if(status1==1)
+	  	{document.getElementById('sensorvalue').innerHTML = "empty" ;}
+	  })
+  dataRef2.on('value', function(getdata2){
+	  	var status2 = getdata2.val();
+      if(status2==1)
+	  	{document.getElementById('sensorvalue2').innerHTML = "empty" ;}
+
+      if(status2==0)
+	  	{document.getElementById('sensorvalue2').innerHTML = "full" ;}
+	  })
+  dataRef3.on('value', function(getdata3){
+	  	var status3 = getdata3.val();
+      if(status3==1)
+	  	{document.getElementById('sensorvalue3').innerHTML = "empty" ;}
+
+      if(status3==0)
+	  	{document.getElementById('sensorvalue3').innerHTML = "full" ;}
+	  })
+
+
+
+
+
+
+
+
+</script>
